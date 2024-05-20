@@ -89,6 +89,28 @@ const serverlessConfiguration: AWS = {
     },
     apiGateway: {
       metrics: true,
+      usagePlan: [
+        {
+          Unlimited: {
+            throttle: {
+              burstLimit: 5000,
+              rateLimit: 2000,
+            },
+          },
+        },
+        {
+          General: {
+            quota: {
+              limit: 86400,
+              period: 'DAY',
+            },
+            throttle: {
+              burstLimit: 1,
+              rateLimit: 0.2,
+            },
+          },
+        },
+      ],
     },
   },
   resources: {
@@ -338,48 +360,6 @@ const serverlessConfiguration: AWS = {
           SourceArn: {
             'Fn::Sub':
               'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayRestApi}/*/*/*',
-          },
-        },
-      },
-      UnlimitedUsagePlan: {
-        Type: 'AWS::ApiGateway::UsagePlan',
-        Properties: {
-          UsagePlanName: 'Unlimited',
-          Description: 'Unlimited usage plan with no throttle or quota limits',
-          ApiStages: [
-            {
-              ApiId: {
-                Ref: 'ApiGatewayRestApi',
-              },
-              Stage: 'dev',
-            },
-          ],
-          Throttle: {
-            BurstLimit: 5000,
-            RateLimit: 2000,
-          },
-        },
-      },
-      GeneralUsagePlan: {
-        Type: 'AWS::ApiGateway::UsagePlan',
-        Properties: {
-          UsagePlanName: 'General',
-          Description: 'General usage plan with limited request rate',
-          ApiStages: [
-            {
-              ApiId: {
-                Ref: 'ApiGatewayRestApi',
-              },
-              Stage: 'dev',
-            },
-          ],
-          Throttle: {
-            BurstLimit: 1,
-            RateLimit: 0.2,
-          },
-          Quota: {
-            Limit: 86400,
-            Period: 'DAY',
           },
         },
       },
