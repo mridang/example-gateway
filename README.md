@@ -1,10 +1,9 @@
-This is an example project to toy around with AWS's API Gateway. 
+This is an example project to toy around with AWS's API Gateway.
 
 To invoke a secured route, you must pass the authentication token as
 a part of the authorization header.
 
 - It is important to mark the routes as private so that the API Keys are used
-
 
 ### Demo
 
@@ -75,27 +74,27 @@ curl -v -X GET 'https://ukgedldd50.execute-api.us-east-1.amazonaws.com/dev/healt
 
 ### Todo
 
-* Add a custom domain to the gateway
-* Create a dashboard to see the number or requests.
-* Create anomaly detection alarms to alert based on increased 5xx response codes.
-* Deploy and OpenAPI based API Gateway.
+- Add a custom domain to the gateway
+- Create a dashboard to see the number or requests.
+- Create anomaly detection alarms to alert based on increased 5xx response codes.
+- Deploy and OpenAPI based API Gateway.
 
 ### Caveats
 
-* There is a hard limit of 10000 unique API Keys. Since we are using 
-API Keys to identify tenants, we can only have 10,000 tenants.
-* Since we one API Keys per tenant, this means that the rate limits are
-on the tenant level.
+- There is a hard limit of 10000 unique API Keys. Since we are using
+  API Keys to identify tenants, we can only have 10,000 tenants.
+- Since we one API Keys per tenant, this means that the rate limits are
+  on the tenant level.
   This means that if you need increased rate limits for a tenant, you
-would need to attach a different usage plan to the key.
+  would need to attach a different usage plan to the key.
 
-* Unable to see the metrics by tenantId
-* All requests are logged but the request and responses are not logged.
+- Unable to see the metrics by tenantId
+- All requests are logged but the request and responses are not logged.
   There is no plan to support this either.
   It should be possible to do this via the Lambda proxy integration but
-considering the complexity, it makes sense to do this via the application.
+  considering the complexity, it makes sense to do this via the application.
   If request and response logging is needed for debugging purposes,
-I recommend building this on the application.
+  I recommend building this on the application.
 
 ### Result
 
