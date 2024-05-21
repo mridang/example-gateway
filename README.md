@@ -12,7 +12,9 @@ a part of the authorization header.
 
 1. First we'll need to create an API Key. This can be done using the command
 
-`aws apigateway create-api-key --name 'API Key for Tenant "example"' --enabled`
+```
+aws apigateway create-api-key --name 'API Key for Tenant "example"' --enabled --output text --no-cli-pager
+```
 
 which will return the output.
 
@@ -44,14 +46,14 @@ To associate the API Key with the "General" usage plan, we first
 need to get the id using
 
 ```
-aws apigateway get-usage-plans --query 'items[?name==`General`].id | [0]' --output text --no-cli-pager
+aws apigateway get-usage-plans --query 'items[?name==`example-gateway-General-dev`].id | [0]' --output text --no-cli-pager
 ```
 
 Once we have the identifier of the usage plan, we can associate the API Key
 with the usage plan using the following command.
 
 ```
-aws apigateway create-usage-plan-key --usage-plan-id '0ffx3i' --key-id '6oeivbs4oa' --key-type 'API_KEY'
+aws apigateway create-usage-plan-key --usage-plan-id '0ffx3i' --key-id '6oeivbs4oa' --key-type 'API_KEY' --output text --no-cli-pager
 ```
 
 Since we use a custom authorizer, we'll need to create a record for this in
@@ -60,11 +62,9 @@ DynamoDB.
 ```
 token=$(openssl rand -base64 32)
 hashed_token=$(echo -n $token | openssl dgst -sha256 | sed 's/^.* //')
-aws dynamodb put-item --table-name Tokens --item "{\"token\": {\"S\": \"$hashed_token\"}, \"clientId\": {\"S\": \"550C8wkd8i5tv2dgux1QGaEW92vaT6sf2Ec9u8bl\"}}"
+aws dynamodb put-item --table-name Tokens --item "{\"token\": {\"S\": \"$hashed_token\"}, \"clientId\": {\"S\": \"XbyhCcBFZp3w4kRE9g9uX9B6ms5xbDIOapxmQEHN\"}}"
 echo "Original token used for hashing: $token"
 ```
-
-X34j/csq5LbbCoIlZ/yQxaaj7LGHipRd+2yKL+HfGKU=
 
 If this is done, you should be able to invoke the API via CURL. To test a
 successful request use,
