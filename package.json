@@ -20,6 +20,7 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-sdk/client-secrets-manager": "^3.511.0",
     "@codegenie/serverless-express": "^4.3.0",
+    "@lifeomic/axios-fetch": "^3.0.1",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
@@ -43,7 +44,7 @@
     "helmet": "^7.1.0",
     "probot": "^13.0.0",
     "reflect-metadata": "^0.2.1",
-    "@lifeomic/axios-fetch": "^3.0.1"
+    "server-timing": "^3.3.3"
   },
   "engines": {
     "node": "20.x"
