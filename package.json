@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^1.18.1",
-    "@aws-sdk/client-secrets-manager": "^3.511.0",
+    "@aws-sdk/client-secrets-manager": "^3.580.0",
     "@codegenie/serverless-express": "^4.3.0",
     "@lifeomic/axios-fetch": "^3.0.1",
     "@nestjs/axios": "^3.0.2",
