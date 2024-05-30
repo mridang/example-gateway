@@ -10,10 +10,15 @@ import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import getSecret from './utils/secrets';
 import { secretName } from './constants';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ClsModule } from 'nestjs-cls';
+import { PowertoolsLoggerService } from './app.logger';
 
 @Global()
 @Module({
   imports: [
+    ClsModule.forRoot({
+      global: true,
+    }),
     HttpModule,
     TerminusModule,
     SentryModule.forRootAsync({
@@ -52,6 +57,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
   ],
   controllers: [AppController],
   providers: [
+    PowertoolsLoggerService,
     {
       provide: 'ENV_PATH',
       useValue: process.env.ENV_PATH || path.resolve(process.cwd(), '.env'),
