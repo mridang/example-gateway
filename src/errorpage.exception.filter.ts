@@ -37,6 +37,7 @@ export class CustomHttpExceptionFilter implements ExceptionFilter {
     }
   }
   catch(exception: Error, host: ArgumentsHost) {
+    console.log(exception);
     if (
       exception instanceof HttpException ||
       CustomHttpExceptionFilter.isHttpError(exception)

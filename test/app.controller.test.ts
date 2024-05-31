@@ -36,10 +36,10 @@ class DynamicController {
     throw new InternalServerErrorException('General error');
   }
 
-  // Cookie test methods
   @Get('set-cookie')
-  setCookie(@Res() res: Response) {
-    res.cookie('test', 'NestJS').send('Cookie is set');
+  setCookie(@Res({ passthrough: true }) res: Response) {
+    res.cookie('test', 'NestJS');
+    return 'Okie';
   }
 
   @Get('read-cookie')
@@ -158,6 +158,17 @@ describe('app.controller test', () => {
       .expect((res) => {
         expect(res.headers['x-dns-prefetch-control']).toBeDefined();
         expect(res.headers['x-frame-options']).toBeDefined();
+      });
+  });
+
+  it('should have the Server-Timing header', async () => {
+    await request(testModule.app.getHttpServer())
+      .get('/health')
+      .expect(HttpStatus.OK)
+      .expect((res) => {
+        expect(res.headers['server-timing']).toMatch(
+          /total;dur=\d+(\.\d+)?;desc="App Total"/,
+        );
       });
   });
 
