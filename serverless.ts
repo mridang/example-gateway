@@ -155,7 +155,7 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::CloudFront::OriginAccessControl',
         Properties: {
           OriginAccessControlConfig: {
-            Name: 'LambdaOAC',
+            Name: `${packageJson.name}-\${self:provider.stage}-oac`,
             OriginAccessControlOriginType: 'lambda',
             SigningBehavior: 'always',
             SigningProtocol: 'sigv4',
