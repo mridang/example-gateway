@@ -6,7 +6,10 @@ import { secretName } from './src/constants';
 const serverlessConfiguration: AWS = {
   service: packageJson.name,
   frameworkVersion: '3',
-  plugins: ['serverless-plugin-typescript'],
+  plugins: [
+    'serverless-plugin-typescript',
+    '@mridang/serverless-checkov-plugin',
+  ],
   package: {
     individually: false,
     patterns: [
@@ -148,6 +151,17 @@ const serverlessConfiguration: AWS = {
       },
     },
     Resources: {
+      LambdaOriginAccessControl: {
+        Type: 'AWS::CloudFront::OriginAccessControl',
+        Properties: {
+          OriginAccessControlConfig: {
+            Name: 'LambdaOAC',
+            OriginAccessControlOriginType: 'lambda',
+            SigningBehavior: 'always',
+            SigningProtocol: 'sigv4',
+          },
+        },
+      },
       TokensTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
