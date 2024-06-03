@@ -24,6 +24,8 @@ import { TimingInterceptor } from './timing.interceptor';
     TerminusModule,
     SentryModule.forRootAsync({
       useFactory: async (secretsManagerClient: SecretsManagerClient) => {
+        console.log('fubar');
+        console.log(process.env);
         if (process.env.SENTRY_DSN) {
           return {
             dsn: process.env.SENTRY_DSN,
