@@ -9,6 +9,7 @@ const serverlessConfiguration: AWS = {
   plugins: [
     'serverless-plugin-typescript',
     '@mridang/serverless-checkov-plugin',
+    '@mridang/serverless-shortsha-plugin',
   ],
   package: {
     individually: false,
@@ -252,14 +253,14 @@ const serverlessConfiguration: AWS = {
             ZipFile: `
               const { DynamoDBClient, GetItemCommand, UpdateItemCommand } = require('@aws-sdk/client-dynamodb');
               const crypto = require('crypto');  // It's better to require modules at the top.
-              
+
               // Initialize DynamoDB Client
               const dynamoDbClient = new DynamoDBClient({ region: 'us-east-1' });
-              
+
               exports.handler = async (event) => {
                 const token = event.authorizationToken;
                 const hashedToken = hashToken(token);
-              
+
                 try {
                   // GetItem from DynamoDB using v3 SDK
                   const getParams = {
@@ -269,7 +270,7 @@ const serverlessConfiguration: AWS = {
                     }
                   };
                   const { Item } = await dynamoDbClient.send(new GetItemCommand(getParams));
-              
+
                   if (Item) {
                     const updateParams = {
                       TableName: 'Tokens',
@@ -280,7 +281,7 @@ const serverlessConfiguration: AWS = {
                       }
                     };
                     await dynamoDbClient.send(new UpdateItemCommand(updateParams));
-              
+
                     const contextAttributes = {
                       clientId: Item.clientId.S
                     };
@@ -293,11 +294,11 @@ const serverlessConfiguration: AWS = {
                   return generatePolicy('user', 'Deny', event.methodArn);
                 }
               };
-              
+
               function hashToken(token) {
                 return crypto.createHash('sha256').update(token).digest('hex');
               }
-              
+
               function generatePolicy(principalId, effect, resource, apiKey, contextAttributes = {}) {
                 return {
                   principalId,
