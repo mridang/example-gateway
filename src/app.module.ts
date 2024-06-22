@@ -11,8 +11,8 @@ import getSecret from './utils/secrets';
 import { secretName } from './constants';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ClsModule } from 'nestjs-cls';
-import { PowertoolsLoggerService } from './app.logger';
 import { TimingInterceptor } from './timing.interceptor';
+import { BetterLogger } from './logger';
 
 @Global()
 @Module({
@@ -58,7 +58,7 @@ import { TimingInterceptor } from './timing.interceptor';
   ],
   controllers: [AppController],
   providers: [
-    PowertoolsLoggerService,
+    BetterLogger,
     {
       provide: 'ENV_PATH',
       useValue: process.env.ENV_PATH || path.resolve(process.cwd(), '.env'),
