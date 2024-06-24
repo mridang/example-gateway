@@ -1,4 +1,10 @@
-import { Global, HttpException, HttpStatus, Module } from '@nestjs/common';
+import {
+  Global,
+  HttpException,
+  HttpStatus,
+  MiddlewareConsumer,
+  Module,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import path, { join } from 'path';
@@ -13,6 +19,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ClsModule } from 'nestjs-cls';
 import { TimingInterceptor } from './timing.interceptor';
 import { BetterLogger } from './logger';
+import { RequestIdMiddleware } from './correlation.middleware';
 
 @Global()
 @Module({
@@ -90,5 +97,7 @@ import { BetterLogger } from './logger';
   exports: ['ENV_PATH', 'SECRETS_MANAGER_CLIENT'],
 })
 export class AppModule {
-  //
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
 }
