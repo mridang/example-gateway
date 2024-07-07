@@ -2,16 +2,14 @@ import type { AWS } from '@serverless/typescript';
 import { AwsLambdaRuntime } from '@serverless/typescript';
 import packageJson from './package.json';
 import { secretName } from './src/constants';
-import ServerlessCheckovPlugin from '@mridang/serverless-checkov-plugin';
-import ServerlessShortshaPlugin from '@mridang/serverless-shortsha-plugin';
 
 const serverlessConfiguration: AWS = {
   service: packageJson.name,
   frameworkVersion: '3',
   plugins: [
     'serverless-plugin-typescript',
-    ServerlessCheckovPlugin.name,
-    ServerlessShortshaPlugin.name,
+    '@mridang/serverless-checkov-plugin',
+    '@mridang/serverless-shortsha-plugin',
   ],
   package: {
     individually: false,
