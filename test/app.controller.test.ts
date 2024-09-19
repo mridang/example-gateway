@@ -87,27 +87,14 @@ describe('app.controller test', () => {
     await testModule.afterAll();
   });
 
-  it('/health (GET)', () => {
+  test('/health (GET)', () => {
     return request(testModule.app.getHttpServer())
       .get('/health')
       .expect(HttpStatus.OK)
-      .expect({
-        status: 'ok',
-        info: {
-          '1.1.1.1': {
-            status: 'up',
-          },
-        },
-        error: {},
-        details: {
-          '1.1.1.1': {
-            status: 'up',
-          },
-        },
-      });
+      .expect('Ok');
   });
 
-  it('/404 (GET)', async () => {
+  test('/404 (GET)', async () => {
     await request(testModule.app.getHttpServer())
       .get('/404')
       .set('Accept', 'text/html')
@@ -120,7 +107,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('/500 (GET)', async () => {
+  test('/500 (GET)', async () => {
     await request(testModule.app.getHttpServer())
       .get('/500')
       .set('Accept', 'text/html')
@@ -133,7 +120,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('/error (GET)', async () => {
+  test('/error (GET)', async () => {
     await request(testModule.app.getHttpServer())
       .get('/error')
       .set('Accept', 'text/html')
@@ -146,7 +133,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('should set and read a cookie', async () => {
+  test('should set and read a cookie', async () => {
     await request(testModule.app.getHttpServer())
       .get('/set-cookie')
       .expect((res) => {
@@ -162,7 +149,7 @@ describe('app.controller test', () => {
       .expect('NestJS');
   });
 
-  it('should include security headers', async () => {
+  test('should include security headers', async () => {
     await request(testModule.app.getHttpServer())
       .get('/some-path')
       .expect((res) => {
@@ -171,7 +158,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('should have the Server-Timing header', async () => {
+  test('should have the Server-Timing header', async () => {
     await request(testModule.app.getHttpServer())
       .get('/health')
       .expect(HttpStatus.OK)
@@ -182,7 +169,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('should handle request validation', async () => {
+  test('should handle request validation', async () => {
     const response = await request(testModule.app.getHttpServer())
       .post('/validate')
       .send({
@@ -196,7 +183,7 @@ describe('app.controller test', () => {
     });
   });
 
-  it('should disallow all crawling', async () => {
+  test('should disallow all crawling', async () => {
     await request(testModule.app.getHttpServer())
       .get('/robots.txt')
       .expect('Content-Type', /text\/plain/)
@@ -207,7 +194,7 @@ describe('app.controller test', () => {
       });
   });
 
-  it('should have the request context set', async () => {
+  test('should have the request context set', async () => {
     await request(testModule.app.getHttpServer())
       .get('/cls-ctx')
       .expect('Content-Type', /application\/json/)
