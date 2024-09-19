@@ -8,6 +8,7 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: '3',
   plugins: [
     'serverless-plugin-typescript',
+    '@mridang/serverless-servestatic-plugin',
     '@mridang/serverless-checkov-plugin',
     '@mridang/serverless-shortsha-plugin',
     '@mridang/serverless-resourcetag-plugin',
