@@ -424,6 +424,12 @@ const serverlessConfiguration: AWS = {
       timeout: 60,
     },
   },
+  custom: {
+    servestatic: {
+      include: ['public/**/*'],
+      public: false,
+    },
+  },
 };
 
 module.exports = serverlessConfiguration;
