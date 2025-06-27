@@ -59,7 +59,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        run: npm ci --no-optional
+        run: npm ci
 
       - name: Run Jest
         run: npm run test
