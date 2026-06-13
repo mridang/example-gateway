@@ -1,7 +1,8 @@
 import { Global, Module } from '@nestjs/common';
-import { secretName } from './constants';
-import { DefaultsModule } from '@mridang/nestjs-defaults';
-import { AppController } from './app.controller';
+import { secretName } from './constants.js';
+import nestjsDefaults from '@mridang/nestjs-defaults';
+const { DefaultsModule } = nestjsDefaults;
+import { AppController } from './app.controller.js';
 
 @Global()
 @Module({

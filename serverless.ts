@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 import { AwsLambdaRuntime } from '@serverless/typescript';
-import packageJson from './package.json';
-import { secretName } from './src/constants';
+import packageJson from './package.json' with { type: 'json' };
+import { secretName } from './src/constants.js';
 
 const serverlessConfiguration: AWS = {
   service: packageJson.name,
@@ -414,7 +414,7 @@ const serverlessConfiguration: AWS = {
   },
   custom: {
     webpack: {
-      webpackConfig: 'webpack.config.js',
+      webpackConfig: 'webpack.config.mjs',
     },
     servestatic: {
       include: ['public/**/*'],
