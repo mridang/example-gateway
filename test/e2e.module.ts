@@ -1,4 +1,5 @@
-import { configure } from '@mridang/nestjs-defaults';
+import nestjsDefaults from '@mridang/nestjs-defaults';
+const { configure } = nestjsDefaults;
 import {
   type DynamicModule,
   type ForwardReference,

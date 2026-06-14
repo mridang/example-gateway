@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
-import { handler } from '../src/lambda';
+import { handler } from '../src/lambda.js';
 import { HttpStatus } from '@nestjs/common';
 
 describe('Lambda Handler', () => {
